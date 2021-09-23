@@ -1,0 +1,26 @@
+﻿<link href="assets/css/prettify.min.css" type="text/css" rel="stylesheet" />
+<link href="assets/css/jm1.css" type="text/css" rel="stylesheet" />
+
+<pre class="prettyprint linenums Lang-go">
+&lt;?php
+
+$client = new \Swoole\Client(SWOOLE_SOCK_TCP);
+$retval = $client->connect('116.62.138.92', 9602);
+
+if($retval){
+	$client->send('Hello, tcp server');
+	$ret = $client->recv();
+	echo 'Retval => '.$ret.PHP_EOL;
+}else{
+	echo 'Fail to connect to tcp server';
+}
+</pre>
+
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/js/prettify.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+		prettyPrint();
+	})
+</script>

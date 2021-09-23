@@ -1,0 +1,22 @@
+﻿<link href="assets/css/prettify.min.css" type="text/css" rel="stylesheet" />
+<link href="assets/css/jm1.css" type="text/css" rel="stylesheet" />
+
+<pre class="prettyprint linenums Lang-go">
+&lt;?php
+
+$client = new Swoole\Client(SWOOLE_SOCK_UDP);
+
+$client->sendto('116.62.138.92', 9603, 'Hello, udp server');
+$result = $client->recv();
+
+echo 'Retval => '.$result.PHP_EOL;
+</pre>
+
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/js/prettify.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+		prettyPrint();
+	})
+</script>

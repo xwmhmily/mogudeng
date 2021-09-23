@@ -1,0 +1,90 @@
+﻿<link href="assets/css/prettify.min.css" type="text/css" rel="stylesheet" />
+<link href="assets/css/jm1.css" type="text/css" rel="stylesheet" />
+
+<pre class="prettyprint linenums Lang-php">
+&lt;?php
+
+define('TARGET_URL', 'http://116.62.138.92:9080/');
+
+use Swoole\Runtime;
+use Swoole\Coroutine;
+use function Swoole\Coroutine\run;
+
+Runtime::enableCoroutine();
+
+$max_loop = mt_rand(100, 1000);
+
+run(function() use ($max_loop) {
+	for($i = 1; $i <= $max_loop; $i++){
+		Coroutine::create(function() use ($i){
+			$retval = file_get_contents(TARGET_URL);
+			echo $i.' => '.$retval.PHP_EOL;
+		});
+	}
+});
+
+echo 'Total => '.$max_loop.PHP_EOL;
+</pre>
+<pre class="prettyprint linenums Lang-go">
+package main
+
+import (
+	"fmt"
+	"runtime"
+	"sync"
+	"net/http"
+	"io/ioutil"
+)
+
+var wg sync.WaitGroup
+const MAX_GOROUTINE = 100
+const MAX_LOOP = 100
+const TARGET_URL = "http://116.62.138.92:9080/"
+
+func init(){
+	runtime.GOMAXPROCS(runtime.NumCPU())
+	wg.Add(MAX_GOROUTINE)
+}
+
+func getWeb(i int) {
+	defer wg.Done()
+	
+	resp, err := http.Get(TARGET_URL)
+	HandleError(err, "http.Get url")
+	defer resp.Body.Close()
+
+	pageBytes, err := ioutil.ReadAll(resp.Body)
+	HandleError(err, "ioutil.ReadAll")
+
+	pageStr := string(pageBytes)
+	fmt.Println(i, "=>", pageStr)
+}
+
+// 处理异常
+func HandleError(err error, why string) {
+	if err != nil {
+		fmt.Println(why, err)
+	}
+}
+
+func main() {
+	fmt.Println("Ready to go")
+
+	for i := 1; i <= MAX_LOOP; i++ {
+		go getWeb(i)
+	}
+
+	wg.Wait()
+	fmt.Println("\r\n Total => ", MAX_LOOP)
+}
+</pre>
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/js/prettify.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+		prettyPrint();
+	})
+</script>
+</body>
+</html>
