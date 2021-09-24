@@ -204,23 +204,22 @@
         <div class="section-title">
           <h2>Services</h2>
         </div>
-
-		<div class="row" id="http">
-			<div class="col-lg-20">
-				<h2>HTTP</h2>
-				基于 Swoole + Hyperf 开发的 HTTP 服务, 客户端(PHP, GO) 并发调用示例代码（PHP 需要Swoole 扩展）
-				<iframe src="source_http.html" width="800" height="1450"></iframe>
-			</div>				
-			<div class="col-lg-20" id="tcp" style="padding-top: 30px;">
-				<h2>TCP Server</h2>
-				基于 Swoole + Hyperf 开发的 TCP echo 服务, 客户端示例代码
-				<iframe src="source_tcp.html" width="800" height="270"></iframe>
-			</div>
-			<div class="col-lg-20" id="udp" style="padding-top: 30px;">
-				<h2>UDP Server</h2>
-				基于 Swoole + Hyperf 开发的 UDP echo 服务, 客户端示例代码
-				<iframe src="source_udp.html" width="800" height="190"></iframe>
-			</div>
+			<div class="row" id="http">
+				<div class="col-lg-20">
+					<h2>HTTP</h2>
+					基于 Swoole + Hyperf 开发的 HTTP 服务, 客户端(PHP, GO) 并发调用示例代码（PHP 需要Swoole 扩展）
+					<iframe src="source_http.html" width="800" height="1450"></iframe>
+				</div>				
+				<div class="col-lg-20" id="tcp" style="padding-top: 30px;">
+					<h2>TCP Server</h2>
+					基于 Swoole + Hyperf 开发的 TCP echo 服务, 客户端示例代码
+					<iframe src="source_tcp.html" width="800" height="270"></iframe>
+				</div>
+				<div class="col-lg-20" id="udp" style="padding-top: 30px;">
+					<h2>UDP Server</h2>
+					基于 Swoole + Hyperf 开发的 UDP echo 服务, 客户端示例代码
+					<iframe src="source_udp.html" width="800" height="190"></iframe>
+				</div>
 				<div class="col-lg-20" id="websocket" style="padding-top: 30px;">
 					<h2>Websocket</h2>
 					基于 Swoole + Hyperf 开发的 Websocket echo 服务, 输入想说的话，点击 [Send]
@@ -237,12 +236,32 @@
 						<textarea id="reply" class="form-control" name="message" rows="5"></textarea>
 					</div>
 					<div class="text-center"><button type="submit" id="sendBtn">Send</button></div>
+					</form>
+				</div>
+		  	</section>
+
+			<div class="row" id="nlp">
+				<div class="col-lg-20" id="nlp_div" style="padding-top: 30px;">
+					<h2>中文分词</h2>
+					基于 Swoole_nlp 作中文分词, 仅需 0.0002 秒
+				</div>
+		  	</div>
+
+		  	<section id="websocketform" class="contact">
+				<div class="col-lg-6">
+					<form action="#" method="post" role="form" class="php-email-form">
+					<div class="form-group">
+						<input type="text" class="form-control" name="subject" id="subject" placeholder="小白小白开飞机, 开到洛杉矶, 洛杉矶, 没饭吃, 吃个肯德基" />
+					</div>
+					<div class="form-group">
+						<textarea id="reply" class="form-control" name="message" rows="5"></textarea>
+					</div>
+					<div class="text-center"><button type="submit" id="sendBtn">Send</button></div>
+					</form>
 				</div>
 		  	</section>
       	</div>
     </section>
-
-	
 
     <section id="contact" class="contact">
       <div class="container">
@@ -314,7 +333,7 @@
 		$('#sendNlpBtn').click(function(){
 			var text = $('#nlp_subject').val();
 			if (text == ''){
-				text = '这家伙很懒, 什么都没说';
+				text = '小白小白开飞机, 开到洛杉矶, 洛杉矶, 没饭吃, 吃个肯德基';
 			}
 
 			$.post('/nlp.php', {'text': text}, function(data){
