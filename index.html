@@ -336,7 +336,7 @@
 				text = '小白小白开飞机, 开到洛杉矶, 洛杉矶, 没饭吃, 吃个肯德基';
 			}
 
-			$.post('/nlp.php', {'text': text}, function(data){
+			$.get('/nlp.php', {'text': text}, function(data){
 				alert(data);
 			});
 		})
