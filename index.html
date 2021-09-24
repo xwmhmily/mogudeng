@@ -221,24 +221,42 @@
 				基于 Swoole + Hyperf 开发的 UDP echo 服务, 客户端示例代码
 				<iframe src="source_udp.html" width="800" height="190"></iframe>
 			</div>
-			<div class="col-lg-20" id="websocket" style="padding-top: 30px;">
-				<h2>Websocket</h2>
-				基于 Swoole + Hyperf 开发的 Websocket echo 服务, 输入想说的话，点击 [Send]
-			</div>
-		  </div>
+				<div class="col-lg-20" id="websocket" style="padding-top: 30px;">
+					<h2>Websocket</h2>
+					基于 Swoole + Hyperf 开发的 Websocket echo 服务, 输入想说的话，点击 [Send]
+				</div>
+		  	</div>
 
-		  <section id="websocketform" class="contact">
-			<div class="col-lg-6">
-				<form action="forms/contact.php" method="post" role="form" class="php-email-form">
-				<div class="form-group">
-					<input type="text" class="form-control" name="subject" id="subject" placeholder="说点啥呗" />
+		  	<section id="websocketform" class="contact">
+				<div class="col-lg-6">
+					<form action="#" method="post" role="form" class="php-email-form">
+					<div class="form-group">
+						<input type="text" class="form-control" name="subject" id="subject" placeholder="说点啥呗" />
+					</div>
+					<div class="form-group">
+						<textarea id="reply" class="form-control" name="message" rows="5"></textarea>
+					</div>
+					<div class="text-center"><button type="submit" id="sendBtn">Send</button></div>
 				</div>
-				<div class="form-group">
-					<textarea id="reply" class="form-control" name="message" rows="5"></textarea>
-				</div>
-				<div class="text-center"><button type="submit" id="sendBtn">Send</button></div>
+		  	</section>
+
+			<div class="col-lg-20">
+				<h2>中文分词</h2>
+				Swoole_nlp 中文分词, 只需要 0.0002 秒
 			</div>
-		  </section>
+			<section id="nlpform" class="contact">
+				<div class="col-lg-6">
+					<form action="#" method="post" role="form" class="php-email-form">
+					<div class="form-group">
+						<input type="text" class="form-control" name="subject" id="nlp_subject" placeholder="这家伙很懒,什么也不想说" />
+					</div>
+					<div class="form-group">
+						<textarea id="nlp_reply" class="form-control" name="message" rows="5"></textarea>
+					</div>
+					<div class="text-center"><button type="submit" id="sendNlpBtn">Send</button></div>
+				</div>
+		  	</section>
+			</div>
       	</div>
     </section>
 
@@ -309,6 +327,17 @@
 <script src="assets/js/main.js"></script>
 <script>
 	$(document).ready(function(){
+		$('#sendNlpBtn').click(function(){
+			var text = $('#nlp_subject').val();
+			if (text == ''){
+				text = '这家伙很懒, 什么都没说';
+			}
+
+			$.post('/nlp.php', {'text': text}, function(data){
+				alert(data);
+			});
+		})
+
 		$('#sendBtn').click(function(){
 			var subject = $('#subject').val();
 			if (subject == ''){
